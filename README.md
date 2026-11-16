@@ -16,7 +16,7 @@ fecha y autor) en **MongoDB Atlas** mediante una **API REST** en Express, con un
 
 | Integrante | Usuario GitHub | Rol | Responsabilidades |
 |---|---|---|---|
-| Sebastian Montaño | `Sebastian-Montano` | **Rol 1 — Arquitecto Cloud y Base de Datos** | Cuentas de Cloudinary y MongoDB Atlas, modelo de metadatos, variables de entorno |
+| Sebastian Montaño | `@Sebastian-Montano` | **Rol 1 — Arquitecto Cloud y Base de Datos** | Cuentas de Cloudinary y MongoDB Atlas, modelo de metadatos, variables de entorno |
 | _Nombre Apellido_ | `@usuario` | **Rol 2 — Backend: Ingesta y Subida Cloud** | `POST /api/archivos`, multer, validación de peso/MIME, subida a Cloudinary, manejo de errores |
 | _Nombre Apellido_ | `@usuario` | **Rol 3 — Backend: Persistencia CRUD y Sincronización** | Guardado de metadatos, `GET /api/archivos` con filtros, `DELETE /api/archivos/:id` sincronizado |
 | _Nombre Apellido_ | `@usuario` | **Rol 4 — Frontend: Formulario de Carga y Validaciones** | Drag & Drop, `FormData`, validación previa, barra de progreso, alertas |
