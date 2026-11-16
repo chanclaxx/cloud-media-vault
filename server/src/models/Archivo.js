@@ -1,36 +1,77 @@
-// Modelo de metadatos de un archivo subido.  Dueño: Rol 1
-// El archivo físico vive SOLO en Cloudinary; aquí guardamos la referencia (url, publicId) y metadatos.
-// La forma final del JSON que devuelve la API está en docs/API.md ("Objeto Archivo").
+// Modelo de metadatos de un archivo subido.
+// El archivo físico vive en Cloudinary; aquí se guarda su referencia y metadatos.
 import mongoose from 'mongoose';
 import { CATEGORIAS } from '../constants/archivos.js';
 
 const archivoSchema = new mongoose.Schema(
   {
-    // TODO(Rol 1): definir los campos. Campos pedidos por el profesor + 3 nuestros:
-    //
-    //   titulo         String, requerido, trim, maxlength ~120
-    //   nombreOriginal String, requerido            (nombre del archivo que subió el usuario)
-    //   url            String, requerido            (secure_url de Cloudinary)
-    //   publicId       String, requerido, unique    (public_id de Cloudinary, para borrar)
-    //   resourceType   String, requerido, enum ['image', 'video', 'raw']  (para borrar en Cloudinary)
-    //   tipoArchivo    String, requerido, enum CATEGORIAS  ('imagen' | 'video' | 'pdf')
-    //   mimeType       String, requerido            (ej. 'image/png')
-    //   tamanoBytes    Number, requerido, min 0
-    //   fechaSubida    Date, default: Date.now      (tipo Date, NO string: la rúbrica revisa fechas)
-    //   subidoPor      String, requerido, trim      (autor)
+    titulo: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 120,
+    },
+    nombreOriginal: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    url: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    publicId: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
+    resourceType: {
+      type: String,
+      required: true,
+      enum: ['image', 'video', 'raw'],
+    },
+    tipoArchivo: {
+      type: String,
+      required: true,
+      enum: CATEGORIAS,
+    },
+    mimeType: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    tamanoBytes: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    fechaSubida: {
+      type: Date,
+      default: Date.now,
+    },
+    subidoPor: {
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
   {
     collection: 'archivos',
     versionKey: false,
-    // TODO(Rol 1): en toJSON, transformar `_id` -> `id` (string) y quitar `_id`,
-    //   para que el frontend reciba exactamente el formato de docs/API.md. Ejemplo:
-    //   toJSON: { transform: (doc, ret) => { ret.id = ret._id.toString(); delete ret._id; return ret; } }
+    toJSON: {
+      transform: (doc, ret) => {
+        ret.id = ret._id.toString();
+        delete ret._id;
+        return ret;
+      },
+    },
   },
 );
 
-// TODO(Rol 1): índices para que las consultas sean "ordenadas y óptimas" (rúbrica criterio 2):
-//   archivoSchema.index({ fechaSubida: -1 });
-//   archivoSchema.index({ tipoArchivo: 1, fechaSubida: -1 });
-void CATEGORIAS;
+archivoSchema.index({ tipoArchivo: 1 });
+archivoSchema.index({ fechaSubida: -1 });
+archivoSchema.index({ titulo: 'text' });
 
 export const Archivo = mongoose.model('Archivo', archivoSchema);
