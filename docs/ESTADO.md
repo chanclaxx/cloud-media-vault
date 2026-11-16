@@ -9,7 +9,7 @@
 
 | Rol | Responsable | Estado general |
 |---|---|---|
-| 1 — Arquitecto Cloud y BD | Sebastian Montaño | 🟡 |
+| 1 — Arquitecto Cloud y BD | Sebastian Montaño | ✅ |
 | 2 — Backend: Ingesta y subida | _(nombre)_ | ⬜ |
 | 3 — Backend: CRUD y sincronización | _(nombre)_ | ⬜ |
 | 4 — Frontend: Formulario de carga | _(nombre)_ | ⬜ |
@@ -32,10 +32,10 @@
 | Cuenta Cloudinary + activar entrega de PDF | ✅ | |
 | Cluster MongoDB Atlas M0 + usuario + Network Access | ✅ | |
 | Compartir credenciales por canal privado | ✅ | |
-| `config/db.js` (conexión Mongoose) | 🟡 | |
-| `config/cloudinary.js` | 🟡 | |
-| `config/env.js` validación de variables obligatorias | 🟡 | |
-| `models/Archivo.js` (esquema + índices + `toJSON`) | 🟡 | |
+| `config/db.js` (conexión Mongoose) | ✅ | |
+| `config/cloudinary.js` | ✅ | |
+| `config/env.js` validación de variables obligatorias | ✅ | |
+| `models/Archivo.js` (esquema + índices + `toJSON`) | ✅ | |
 
 ## Rol 2 — Backend: Ingesta y subida
 
