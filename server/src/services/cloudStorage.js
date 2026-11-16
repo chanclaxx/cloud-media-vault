@@ -32,19 +32,35 @@ export async function subirACloud(buffer) {
 }
 
 /**
- * Elimina un recurso de Cloudinary.
+ * Elimina un recurso de Cloudinary.  Dueño: Rol 3
  * @param {string} publicId      guardado en la BD
  * @param {string} resourceType  guardado en la BD ('image' | 'video' | 'raw')
+ * @returns {Promise<{ estado: 'eliminado' | 'no_existia' }>}
+ * @throws {HttpError} 502 ERROR_NUBE si Cloudinary falla
  */
 export async function eliminarDeCloud(publicId, resourceType) {
-  // TODO(Rol 3):
-  //   const r = await cloudinary.uploader.destroy(publicId, { resource_type: resourceType, invalidate: true });
-  //   - r.result === 'ok'        -> borrado.
-  //   - r.result === 'not found' -> ya no existía en la nube; tratarlo como borrado (ver docs/API.md).
-  //   - cualquier otra cosa o excepción -> new HttpError(502, 'ERROR_NUBE', 'No se pudo eliminar el archivo de la nube.')
-  //    Si resource_type no coincide con el real, Cloudinary responde 'not found' aunque exista:
-  //      por eso guardamos resourceType en la BD al subir.
-  void publicId;
-  void resourceType;
-  throw new HttpError(501, 'NO_IMPLEMENTADO', 'eliminarDeCloud aún no está implementado (Rol 3).');
+  // ⚠️ resource_type debe ser el mismo con el que se subió (por eso se guarda en la BD):
+  //    si no coincide, Cloudinary responde 'not found' aunque el archivo exista.
+  let resultado;
+  try {
+    resultado = await cloudinary.uploader.destroy(publicId, {
+      resource_type: resourceType,
+      invalidate: true, // limpia la copia en caché del CDN para que la URL deje de servir el archivo
+    });
+  } catch (error) {
+    // El SDK a veces rechaza con { error: { message } } en lugar de un Error normal.
+    console.error('[cloudinary] Falló la eliminación de', publicId, '-', error?.message ?? error?.error?.message ?? error);
+    throw new HttpError(502, 'ERROR_NUBE', 'No se pudo eliminar el archivo de la nube. Intenta de nuevo.');
+  }
+
+  if (resultado?.result === 'ok') return { estado: 'eliminado' };
+
+  // Ya no estaba en la nube: se considera borrado para poder limpiar la BD (docs/API.md).
+  if (resultado?.result === 'not found') {
+    console.warn(`[cloudinary] ${publicId} no existía en la nube; se continúa con la BD.`);
+    return { estado: 'no_existia' };
+  }
+
+  console.error('[cloudinary] Respuesta inesperada al eliminar', publicId, resultado);
+  throw new HttpError(502, 'ERROR_NUBE', 'No se pudo eliminar el archivo de la nube. Intenta de nuevo.');
 }
