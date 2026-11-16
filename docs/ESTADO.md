@@ -11,7 +11,7 @@
 |---|---|---|
 | 1 — Arquitecto Cloud y BD | Sebastian Montaño | 🟡 |
 | 2 — Backend: Ingesta y subida |Elias Castro| 🟡 |
-| 3 — Backend: CRUD y sincronización | _(nombre)_ | ⬜ |
+| 3 — Backend: CRUD y sincronización | _(nombre)_ | ✅ |
 | 4 — Frontend: Formulario de carga | _(nombre)_ | ⬜ |
 | 5 — Frontend: Galería, filtros y QA | _(nombre)_ | ⬜ |
 
@@ -50,10 +50,10 @@
 
 | Tarea | Estado | Notas |
 |---|---|---|
-| `crearArchivo` parte 2: guardar en BD (+ rollback en la nube si falla) | ⬜ | |
-| `listarArchivos` (orden + filtro `tipo` + búsqueda `q`) | ⬜ | |
-| `services/cloudStorage.js` → `eliminarDeCloud` | ⬜ | |
-| `eliminarArchivo` (nube primero, luego BD) | ⬜ | |
+| `crearArchivo` parte 2: guardar en BD (+ rollback en la nube si falla) | ✅ | Probado con Cloudinary + Atlas reales (imagen y PDF → 201). Título > 120 → 400 con rollback. |
+| `listarArchivos` (orden + filtro `tipo` + búsqueda `q`) | ✅ | Probado real: `?q=` y `?tipo=pdf` OK. `q` se escapa y se limita a 100 caracteres. |
+| `services/cloudStorage.js` → `eliminarDeCloud` | ✅ | Probado real: el recurso desaparece de Cloudinary (Admin API → 404). |
+| `eliminarArchivo` (nube primero, luego BD) | ✅ | Probado real: borra en Cloudinary y en Atlas; repetir → 404. Si la nube falla → 502 y NO borra la BD. |
 
 ## Rol 4 — Frontend: Formulario de carga
 
@@ -99,9 +99,16 @@
 
 > Una línea por avance, la más reciente arriba. Formato: `AAAA-MM-DD · Rol N · Nombre · qué se hizo`.
 
+- 2026-11-16 · Rol 3 · _(nombre)_ · Prueba real completa: subir imagen + PDF → aparecen en Cloudinary y Atlas; GET con filtros OK; DELETE → borrados en ambos (verificado directo en Cloudinary y Atlas). Datos de prueba eliminados.
+- 2026-11-16 · Rol 3 · _(nombre)_ · persistencia en `crearArchivo` con rollback, `GET` con filtros/orden, `DELETE` sincronizado (nube → BD) y `eliminarDeCloud`. Lógica probada fuera del repo con Cloudinary/BD simulados (12/12).
 - 2026-11-16 · Rol 2 · _(nombre)_ · multer real, errorHandler (413/400), subirACloud, validación de firma y crearArchivo parte 1 (pendiente probar con credenciales).
 - 2026-11-16 · Base · Creación de la estructura del repositorio, documentación y esqueletos por rol.
 
 ## Bloqueos / decisiones pendientes
 
 - _(Escribir aquí si algo bloquea a alguien o si hay que decidir algo en equipo.)_
+- **`querySrv ECONNREFUSED` al conectar a MongoDB** (le pasó al Rol 3): no es la contraseña, es el DNS del
+  computador, que no resuelve direcciones `mongodb+srv://`. Soluciones (cualquiera):
+  1. Cambiar el DNS de Windows a `8.8.8.8` / `1.1.1.1` (Configuración → Red → Adaptador → DNS).
+  2. En tu propio `server/.env`, usar la cadena *sin* `+srv` que da Atlas (Connect → Drivers → versión antigua del driver).
+  3. Decisión del Rol 1: hacer que `config/db.js` use DNS públicos si falla el SRV.
