@@ -1,0 +1,119 @@
+/* Estilos globales base. (Compartido: Rol 4 / Rol 5)
+   Cada componente puede tener su propio .css al lado (ej. FileCard.css) e importarlo en el .jsx. */
+
+:root {
+  --color-fondo: #f4f5f7;
+  --color-superficie: #ffffff;
+  --color-texto: #1d2129;
+  --color-texto-suave: #5c6370;
+  --color-borde: #dde1e6;
+  --color-primario: #3858e9;
+  --color-primario-hover: #2b46c2;
+  --color-exito: #1e8a4c;
+  --color-error: #c62828;
+  --color-aviso: #a86500;
+  --radio: 10px;
+  --sombra: 0 1px 3px rgb(0 0 0 / 0.08);
+
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+  color: var(--color-texto);
+  background: var(--color-fondo);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-fondo: #15171c;
+    --color-superficie: #1f2229;
+    --color-texto: #e8eaed;
+    --color-texto-suave: #a0a6b0;
+    --color-borde: #343843;
+    --color-primario: #7b93ff;
+    --color-primario-hover: #95a8ff;
+    --color-exito: #4cc27f;
+    --color-error: #ff6b6b;
+    --color-aviso: #f0b04a;
+    --sombra: none;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-fondo);
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.app__header h1 {
+  margin: 0;
+}
+
+.app__header p {
+  margin: 4px 0 0;
+  color: var(--color-texto-suave);
+}
+
+.app__main {
+  display: grid;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* En pantallas anchas: formulario a la izquierda, galería a la derecha */
+@media (min-width: 900px) {
+  .app__main {
+    grid-template-columns: 360px 1fr;
+    align-items: start;
+  }
+}
+
+.panel {
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 20px;
+  min-width: 0;
+}
+
+.panel h2 {
+  margin-top: 0;
+  font-size: 1.15rem;
+}
+
+.app__footer {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-texto-suave);
+}
+
+/* Marcador temporal de componentes que aún no se implementan. Borrar cuando no se use. */
+.pendiente {
+  border: 2px dashed var(--color-borde);
+  border-radius: var(--radio);
+  padding: 24px;
+  text-align: center;
+  color: var(--color-texto-suave);
+}
