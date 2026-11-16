@@ -1,12 +1,12 @@
-// Carga y expone las variables de entorno.  Dueño: Rol 1
-//
-// Usa process.loadEnvFile() (incluido en Node >= 21.7), así no necesitamos la librería dotenv.
-// Lee el archivo .env de la carpeta desde donde se ejecuta `npm run dev` (server/).
+// Carga y expone las variables de entorno. Dueño: Sebastian Montaño
+// Requiere Node.js >= 21.7 para process.loadEnvFile().
 
 try {
   process.loadEnvFile();
 } catch {
-  console.warn('[env] No se encontró server/.env. Copia server/.env.example como server/.env y llénalo.');
+  console.warn(
+    '[env] No se pudo cargar .env. Copia server/.env.example como server/.env y complétalo.'
+  );
 }
 
 export const env = {
@@ -22,8 +22,20 @@ export const env = {
   CLOUDINARY_FOLDER: process.env.CLOUDINARY_FOLDER || 'cloud-media-vault',
 };
 
-// TODO(Rol 1): validar las variables obligatorias al arrancar.
-//   - Obligatorias: MONGODB_URI, CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET.
-//   - Si falta alguna, mostrar UN mensaje claro con la lista de las que faltan y terminar el proceso
-//     (process.exit(1)). Es mejor fallar al inicio que con un error raro en la primera subida.
-//   - NUNCA imprimir los valores (son secretos); solo los nombres de las que faltan.
+const obligatorias = [
+  'MONGODB_URI',
+  'CLOUDINARY_CLOUD_NAME',
+  'CLOUDINARY_API_KEY',
+  'CLOUDINARY_API_SECRET',
+];
+
+const faltantes = obligatorias.filter(
+  (nombre) => !process.env[nombre]?.trim()
+);
+
+if (faltantes.length > 0) {
+  console.error(
+    `[env] Faltan variables obligatorias: ${faltantes.join(', ')}`
+  );
+  process.exit(1);
+}
