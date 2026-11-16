@@ -1,18 +1,28 @@
 // Manejador de errores central.  Dueño: Rol 2
 // Todos los errores terminan aquí y salen con el formato { ok: false, error: { codigo, mensaje } }.
 // Express 5 ya envía aquí los errores de funciones async (no hace falta try/catch + next(err)).
+import multer from 'multer';
 import { HttpError } from '../utils/HttpError.js';
+import { MAX_MB } from '../constants/archivos.js';
 
 // eslint-disable-next-line no-unused-vars
 export function errorHandler(err, req, res, next) {
   if (res.headersSent) return next(err);
 
-  // TODO(Rol 2): traducir los errores de multer (err instanceof multer.MulterError):
-  //   - err.code === 'LIMIT_FILE_SIZE'       -> 413 'ARCHIVO_MUY_GRANDE' ("El archivo supera el límite de 10 MB.")
-  //   - err.code === 'LIMIT_UNEXPECTED_FILE' -> 400 'DATOS_INVALIDOS'  (campo con nombre distinto a "archivo"
-  //                                             o más de un archivo)
-  //   - otros códigos de multer               -> 400 'DATOS_INVALIDOS'
-  //   (Importar: import multer from 'multer';)
+  // Errores de multer -> formato del contrato (docs/API.md)
+  if (err instanceof multer.MulterError) {
+    if (err.code === 'LIMIT_FILE_SIZE') {
+      return res.status(413).json({
+        ok: false,
+        error: { codigo: 'ARCHIVO_MUY_GRANDE', mensaje: `El archivo supera el límite de ${MAX_MB} MB.` },
+      });
+    }
+    const mensaje =
+      err.code === 'LIMIT_UNEXPECTED_FILE'
+        ? 'Envía un solo archivo en el campo "archivo".'
+        : 'La petición de subida no es válida.';
+    return res.status(400).json({ ok: false, error: { codigo: 'DATOS_INVALIDOS', mensaje } });
+  }
 
   if (err instanceof HttpError) {
     return res.status(err.status).json({

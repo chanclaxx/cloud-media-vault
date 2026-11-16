@@ -4,20 +4,36 @@
 //   eliminarArchivo -> Rol 3
 // Express 5: si una función async lanza un error, llega solo a errorHandler (no hace falta try/catch
 // salvo que quieras hacer algo antes, como el rollback de crearArchivo).
+import path from 'node:path';
 import { HttpError } from '../utils/HttpError.js';
+import { categoriaDeMime } from '../constants/archivos.js';
+import { subirACloud } from '../services/cloudStorage.js';
+import { firmaCoincideConMime } from '../utils/firmaArchivo.js';
 
 const noImplementado = (que, rol) =>
   new HttpError(501, 'NO_IMPLEMENTADO', `${que} aún no está implementado (${rol}).`);
 
 /** POST /api/archivos  (multipart/form-data: archivo, titulo?, subidoPor) */
 export async function crearArchivo(req, res) {
-  // ---------- Parte 1 — TODO(Rol 2): validar y subir ----------
-  //   1. Si no hay req.file -> HttpError(400, 'ARCHIVO_REQUERIDO', 'Debes adjuntar un archivo.')
-  //   2. subidoPor = req.body.subidoPor?.trim(); si está vacío -> HttpError(400, 'DATOS_INVALIDOS', ...)
-  //   3. titulo = req.body.titulo?.trim() || nombre del archivo sin extensión
-  //   4. tipoArchivo = categoriaDeMime(req.file.mimetype)   (import desde ../constants/archivos.js)
-  //   5. const subida = await subirACloud(req.file.buffer)  (import desde ../services/cloudStorage.js)
-  //
+  // ---------- Parte 1 (Rol 2): validar y subir ----------
+  if (!req.file) {
+    throw new HttpError(400, 'ARCHIVO_REQUERIDO', 'Debes adjuntar un archivo.');
+  }
+
+  const subidoPor = req.body.subidoPor?.trim();
+  if (!subidoPor) {
+    throw new HttpError(400, 'DATOS_INVALIDOS', 'El campo "subidoPor" es obligatorio.');
+  }
+
+  // El MIME lo declara el navegador: se contrasta con los primeros bytes reales del archivo.
+  if (!firmaCoincideConMime(req.file.buffer, req.file.mimetype)) {
+    throw new HttpError(415, 'TIPO_NO_PERMITIDO', 'El contenido del archivo no corresponde a su tipo declarado.');
+  }
+
+  const titulo = req.body.titulo?.trim() || path.parse(req.file.originalname).name;
+  const tipoArchivo = categoriaDeMime(req.file.mimetype);
+  const subida = await subirACloud(req.file.buffer);
+
   // ---------- Parte 2 — TODO(Rol 3): guardar en la BD ----------
   //   6. try {
   //        const archivo = await Archivo.create({
@@ -31,9 +47,12 @@ export async function crearArchivo(req, res) {
   //        await eliminarDeCloud(subida.publicId, subida.resourceType).catch(() => {});
   //        throw error;   // -> errorHandler responde 500
   //      }
-  void req;
-  void res;
-  throw noImplementado('POST /api/archivos', 'Rol 2 y Rol 3');
+
+  // TEMPORAL (hasta que el Rol 3 persista en la BD): responde con lo subido a la nube, sin guardar.
+  return res.status(201).json({
+    ok: true,
+    data: { titulo, tipoArchivo, subidoPor, mimeType: req.file.mimetype, tamanoBytes: req.file.size, ...subida },
+  });
 }
 
 /** GET /api/archivos?tipo=imagen|video|pdf&q=texto&orden=reciente|antiguo */

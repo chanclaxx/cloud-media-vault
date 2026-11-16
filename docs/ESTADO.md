@@ -10,7 +10,7 @@
 | Rol | Responsable | Estado general |
 |---|---|---|
 | 1 — Arquitecto Cloud y BD | Sebastian Montaño | 🟡 |
-| 2 — Backend: Ingesta y subida | _(nombre)_ | ⬜ |
+| 2 — Backend: Ingesta y subida |Elias Castro| 🟡 |
 | 3 — Backend: CRUD y sincronización | _(nombre)_ | ⬜ |
 | 4 — Frontend: Formulario de carga | _(nombre)_ | ⬜ |
 | 5 — Frontend: Galería, filtros y QA | _(nombre)_ | ⬜ |
@@ -41,10 +41,10 @@
 
 | Tarea | Estado | Notas |
 |---|---|---|
-| `middlewares/upload.js` (multer memoryStorage + límite + filtro MIME) | ⬜ | |
-| `services/cloudStorage.js` → `subirACloud` | ⬜ | |
-| `crearArchivo` parte 1: validar campos + subir | ⬜ | |
-| `middlewares/errorHandler.js` (MulterError → 413/415, etc.) | ⬜ | |
+| `middlewares/upload.js` (multer memoryStorage + límite + filtro MIME) | 🟡 | |
+| `services/cloudStorage.js` → `subirACloud` | 🟡 | |
+| `crearArchivo` parte 1: validar campos + subir | 🟡 | |
+| `middlewares/errorHandler.js` (MulterError → 413/415, etc.) | 🟡 | |
 
 ## Rol 3 — Backend: CRUD y sincronización
 
@@ -99,6 +99,7 @@
 
 > Una línea por avance, la más reciente arriba. Formato: `AAAA-MM-DD · Rol N · Nombre · qué se hizo`.
 
+- 2026-11-16 · Rol 2 · _(nombre)_ · multer real, errorHandler (413/400), subirACloud, validación de firma y crearArchivo parte 1 (pendiente probar con credenciales).
 - 2026-11-16 · Base · Creación de la estructura del repositorio, documentación y esqueletos por rol.
 
 ## Bloqueos / decisiones pendientes
