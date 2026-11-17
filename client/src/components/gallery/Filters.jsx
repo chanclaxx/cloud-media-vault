@@ -4,14 +4,40 @@
 //   valor: { tipo: string, q: string }
 //   onCambiar(nuevoValor) -> Gallery actualiza sus filtros
 //
-// TODO(Rol 5):
-//   - Botones (o <select>) con FILTROS_TIPO de constants/archivos.js: Todos / Imágenes / Videos / PDF.
-//     Marcar el activo (aria-pressed={activo} si son botones).
-//   - <input type="search" placeholder="Buscar por título..."> con <label> (puede ser visualmente oculto).
-//   - onCambiar({ ...valor, tipo }) / onCambiar({ ...valor, q }).
+// Botones por tipo (Todos / Imágenes / Videos / PDF) + campo de búsqueda por título.
+// Es un componente "controlado": no guarda estado propio, todo vive en Gallery.
+import { FILTROS_TIPO } from '../../constants/archivos.js';
 
 export default function Filters({ valor, onCambiar }) {
-  void valor;
-  void onCambiar;
-  return <div className="pendiente">Filtros — pendiente (Rol 5)</div>;
+  return (
+    <div className="filtros">
+      <div className="filtros__tipos" role="group" aria-label="Filtrar por tipo de archivo">
+        {FILTROS_TIPO.map((opcion) => {
+          const activo = valor.tipo === opcion.valor;
+          return (
+            <button
+              key={opcion.valor || 'todos'}
+              type="button"
+              className={`filtros__boton${activo ? ' filtros__boton--activo' : ''}`}
+              aria-pressed={activo}
+              onClick={() => onCambiar({ ...valor, tipo: opcion.valor })}
+            >
+              {opcion.etiqueta}
+            </button>
+          );
+        })}
+      </div>
+
+      <label className="filtros__busqueda">
+        <span className="solo-lector">Buscar por título</span>
+        <input
+          type="search"
+          placeholder="Buscar por título..."
+          value={valor.q}
+          maxLength={100}
+          onChange={(e) => onCambiar({ ...valor, q: e.target.value })}
+        />
+      </label>
+    </div>
+  );
 }
