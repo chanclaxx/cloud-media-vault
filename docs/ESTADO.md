@@ -13,7 +13,7 @@
 | 2 — Backend: Ingesta y subida |Elias Castro| 🟡 |
 | 3 — Backend: CRUD y sincronización | _(nombre)_ | ✅ |
 | 4 — Frontend: Formulario de carga | _(nombre)_ | ⬜ |
-| 5 — Frontend: Galería, filtros y QA | _(nombre)_ | ⬜ |
+| 5 — Frontend: Galería, filtros y QA | Alejandro González | 🟡 |
 
 ## Base del repositorio (ya hecho)
 
@@ -69,13 +69,13 @@
 
 | Tarea | Estado | Notas |
 |---|---|---|
-| `utils/formato.js` (bytes → KB/MB, fecha legible) | ⬜ | |
-| `api.js` → `listarArchivos`, `eliminarArchivo` | ⬜ | |
-| `MediaPreview.jsx` (img / video / pdf) | ⬜ | |
-| `FileCard.jsx` (metadatos + botón eliminar) | ⬜ | |
-| `Filters.jsx` (tipo + búsqueda) | ⬜ | |
-| `Gallery.jsx` (carga, vacío, error, borrado reactivo) | ⬜ | |
-| Diseño responsivo | ⬜ | |
+| `utils/formato.js` (bytes → KB/MB, fecha legible) | ✅ | |
+| `api.js` → `listarArchivos`, `eliminarArchivo` | ✅ | Solo envía los filtros con valor. |
+| `MediaPreview.jsx` (img / video / pdf) | ✅ | Miniaturas livianas con transformaciones de Cloudinary; PDF = 1.ª página + "Abrir PDF"; respaldo si la miniatura falla. |
+| `FileCard.jsx` (metadatos + botón eliminar) | ✅ | Confirmación + "Eliminando..."; si falla, el botón se reactiva. |
+| `Filters.jsx` (tipo + búsqueda) | ✅ | |
+| `Gallery.jsx` (carga, vacío, error, borrado reactivo) | ✅ | Debounce de 300 ms en la búsqueda; ignora respuestas viejas. |
+| Diseño responsivo | ✅ | `Gallery.css`: grid `auto-fill, minmax(220px, 1fr)`; probado a 390 px. |
 
 ## QA — Pruebas de integración (Rol 5 lidera, todos ayudan)
 
@@ -99,6 +99,7 @@
 
 > Una línea por avance, la más reciente arriba. Formato: `AAAA-MM-DD · Rol N · Nombre · qué se hizo`.
 
+- 2026-11-16 · Rol 5 · Alejandro González · Galería completa (vista previa img/video/PDF, metadatos, filtros por tipo, búsqueda con debounce, borrado reactivo, responsivo). Probada en navegador contra una API simulada fuera del repo: filtros, búsqueda, DELETE 200 y 502, servidor apagado y consola sin errores. Falta la prueba real con Cloudinary/Atlas (tabla QA).
 - 2026-11-16 · Rol 3 · _(nombre)_ · Prueba real completa: subir imagen + PDF → aparecen en Cloudinary y Atlas; GET con filtros OK; DELETE → borrados en ambos (verificado directo en Cloudinary y Atlas). Datos de prueba eliminados.
 - 2026-11-16 · Rol 3 · _(nombre)_ · persistencia en `crearArchivo` con rollback, `GET` con filtros/orden, `DELETE` sincronizado (nube → BD) y `eliminarDeCloud`. Lógica probada fuera del repo con Cloudinary/BD simulados (12/12).
 - 2026-11-16 · Rol 2 · _(nombre)_ · multer real, errorHandler (413/400), subirACloud, validación de firma y crearArchivo parte 1 (pendiente probar con credenciales).

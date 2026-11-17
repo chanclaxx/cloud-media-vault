@@ -61,10 +61,14 @@ export function subirArchivo(formData, { onProgreso } = {}) {
  * @returns {Promise<object[]>}
  */
 export async function listarArchivos(filtros = {}) {
-  // TODO(Rol 5): armar la query con URLSearchParams (solo con los filtros que tengan valor) y
-  //   return pedirJSON(`/api/archivos?${params}`);
-  void filtros;
-  throw new Error('listarArchivos aún no está implementado (Rol 5).');
+  // Solo se envían los filtros con valor: { tipo: '', q: 'logo' } -> "?q=logo"
+  const params = new URLSearchParams();
+  for (const [clave, valor] of Object.entries(filtros)) {
+    const texto = typeof valor === 'string' ? valor.trim() : valor;
+    if (texto) params.set(clave, texto);
+  }
+  const query = params.toString();
+  return pedirJSON(`/api/archivos${query ? `?${query}` : ''}`);
 }
 
 /**
@@ -72,7 +76,5 @@ export async function listarArchivos(filtros = {}) {
  * @param {string} id
  */
 export async function eliminarArchivo(id) {
-  // TODO(Rol 5): return pedirJSON(`/api/archivos/${encodeURIComponent(id)}`, { method: 'DELETE' });
-  void id;
-  throw new Error('eliminarArchivo aún no está implementado (Rol 5).');
+  return pedirJSON(`/api/archivos/${encodeURIComponent(id)}`, { method: 'DELETE' });
 }
