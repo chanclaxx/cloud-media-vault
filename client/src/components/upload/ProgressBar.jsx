@@ -2,10 +2,24 @@
 //
 // Props:
 //   valor: number (0-100)
-//
-// TODO(Rol 4): puede ser <progress max="100" value={valor} /> con estilos, o un div con width: `${valor}%`.
-//   Mostrar también el texto "45 %". Accesibilidad: role="progressbar" + aria-valuenow si usas div.
+import './Upload.css';
 
 export default function ProgressBar({ valor }) {
-  return <progress max="100" value={valor} />;
+  const porcentaje = Math.max(0, Math.min(100, Math.round(valor)));
+
+  return (
+    <div className="progreso">
+      <div
+        className="progreso__pista"
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={porcentaje}
+        aria-label="Progreso de la subida"
+      >
+        <div className="progreso__relleno" style={{ width: `${porcentaje}%` }} />
+      </div>
+      <span className="progreso__texto">{porcentaje} %</span>
+    </div>
+  );
 }

@@ -41,18 +41,41 @@ export async function pedirJSON(ruta, opciones = {}) {
  * @returns {Promise<object>}   el objeto Archivo creado
  */
 export function subirArchivo(formData, { onProgreso } = {}) {
-  // TODO(Rol 4): usar XMLHttpRequest (fetch NO informa el progreso de subida).
-  //   return new Promise((resolve, reject) => {
-  //     const xhr = new XMLHttpRequest();
-  //     xhr.open('POST', `${API_URL}/api/archivos`);
-  //     xhr.upload.onprogress = (e) => { if (e.lengthComputable) onProgreso?.(Math.round((e.loaded / e.total) * 100)); };
-  //     xhr.onload = () => { parsear JSON; si xhr.status 2xx y ok -> resolve(cuerpo.data); si no -> reject(new Error(cuerpo.error.mensaje)) };
-  //     xhr.onerror = () => reject(new Error('No se pudo conectar con el servidor.'));
-  //     xhr.send(formData);   // NO poner Content-Type a mano: el navegador agrega el boundary.
-  //   });
-  void formData;
-  void onProgreso;
-  return Promise.reject(new Error('subirArchivo aún no está implementado (Rol 4).'));
+  // XMLHttpRequest porque fetch no informa el progreso de subida.
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `${API_URL}/api/archivos`);
+
+    xhr.upload.onprogress = (evento) => {
+      if (evento.lengthComputable) {
+        onProgreso?.(Math.round((evento.loaded / evento.total) * 100));
+      }
+    };
+
+    xhr.onload = () => {
+      let cuerpo = null;
+      try {
+        cuerpo = JSON.parse(xhr.responseText);
+      } catch {
+        // respuesta sin JSON (no debería pasar con nuestra API)
+      }
+
+      if (xhr.status >= 200 && xhr.status < 300 && cuerpo?.ok) {
+        resolve(cuerpo.data);
+        return;
+      }
+      const error = new Error(cuerpo?.error?.mensaje || `Error ${xhr.status} del servidor.`);
+      error.codigo = cuerpo?.error?.codigo;
+      error.status = xhr.status;
+      reject(error);
+    };
+
+    xhr.onerror = () => reject(new Error('No se pudo conectar con el servidor. ¿Está corriendo la API?'));
+    xhr.onabort = () => reject(new Error('La subida fue cancelada.'));
+
+    // No poner Content-Type a mano: el navegador agrega el boundary del multipart.
+    xhr.send(formData);
+  });
 }
 
 /**

@@ -12,8 +12,8 @@
 | 1 — Arquitecto Cloud y BD | Sebastian Montaño | 🟡 |
 | 2 — Backend: Ingesta y subida |Elias Castro| 🟡 |
 | 3 — Backend: CRUD y sincronización | _(nombre)_ | ✅ |
-| 4 — Frontend: Formulario de carga | _(nombre)_ | ⬜ |
-| 5 — Frontend: Galería, filtros y QA | Alejandro González | 🟡 |
+| 4 — Frontend: Formulario de carga | _(nombre)_ | ✅ |
+| 5 — Frontend: Galería, filtros y QA | _(nombre)_ | ⬜ |
 
 ## Base del repositorio (ya hecho)
 
@@ -59,23 +59,23 @@
 
 | Tarea | Estado | Notas |
 |---|---|---|
-| `DropZone.jsx` (drag & drop + selector) | ⬜ | |
-| Validación de tipo y peso antes de enviar | ⬜ | |
-| `api.js` → `subirArchivo` con XHR y progreso | ⬜ | |
-| `ProgressBar.jsx`, `Spinner.jsx`, `Alert.jsx` | ⬜ | |
-| `UploadForm.jsx` (estados + `onSubido`) | ⬜ | |
+| `DropZone.jsx` (drag & drop + selector) | ✅ | Arrastrar y soltar con `preventDefault`, selector con teclado, resaltado al arrastrar y texto de ayuda. |
+| Validación de tipo y peso antes de enviar | ✅ | Tipo no permitido y > 10 MB se rechazan en el navegador con alerta, sin petición al servidor. |
+| `api.js` → `subirArchivo` con XHR y progreso | ✅ | XHR con `upload.onprogress`; errores con el mensaje del servidor. |
+| `ProgressBar.jsx`, `Spinner.jsx`, `Alert.jsx` | ✅ | Barra con `role="progressbar"`, spinner animado y alertas por tipo (éxito/error/aviso). |
+| `UploadForm.jsx` (estados + `onSubido`) | ✅ | Estados inactivo/subiendo/éxito/error, vista previa local, campos título y autor; llama `onSubido` al recibir 201. |
 
 ## Rol 5 — Frontend: Galería, filtros y QA
 
 | Tarea | Estado | Notas |
 |---|---|---|
-| `utils/formato.js` (bytes → KB/MB, fecha legible) | ✅ | |
-| `api.js` → `listarArchivos`, `eliminarArchivo` | ✅ | Solo envía los filtros con valor. |
-| `MediaPreview.jsx` (img / video / pdf) | ✅ | Miniaturas livianas con transformaciones de Cloudinary; PDF = 1.ª página + "Abrir PDF"; respaldo si la miniatura falla. |
-| `FileCard.jsx` (metadatos + botón eliminar) | ✅ | Confirmación + "Eliminando..."; si falla, el botón se reactiva. |
-| `Filters.jsx` (tipo + búsqueda) | ✅ | |
-| `Gallery.jsx` (carga, vacío, error, borrado reactivo) | ✅ | Debounce de 300 ms en la búsqueda; ignora respuestas viejas. |
-| Diseño responsivo | ✅ | `Gallery.css`: grid `auto-fill, minmax(220px, 1fr)`; probado a 390 px. |
+| `utils/formato.js` (bytes → KB/MB, fecha legible) | ⬜ | |
+| `api.js` → `listarArchivos`, `eliminarArchivo` | ⬜ | |
+| `MediaPreview.jsx` (img / video / pdf) | ⬜ | |
+| `FileCard.jsx` (metadatos + botón eliminar) | ⬜ | |
+| `Filters.jsx` (tipo + búsqueda) | ⬜ | |
+| `Gallery.jsx` (carga, vacío, error, borrado reactivo) | ⬜ | |
+| Diseño responsivo | ⬜ | |
 
 ## QA — Pruebas de integración (Rol 5 lidera, todos ayudan)
 
@@ -99,7 +99,7 @@
 
 > Una línea por avance, la más reciente arriba. Formato: `AAAA-MM-DD · Rol N · Nombre · qué se hizo`.
 
-- 2026-11-16 · Rol 5 · Alejandro González · Galería completa (vista previa img/video/PDF, metadatos, filtros por tipo, búsqueda con debounce, borrado reactivo, responsivo). Probada en navegador contra una API simulada fuera del repo: filtros, búsqueda, DELETE 200 y 502, servidor apagado y consola sin errores. Falta la prueba real con Cloudinary/Atlas (tabla QA).
+- 2026-11-17 · Rol 4 · _(nombre)_ · Formulario de carga completo: DropZone (drag & drop + selector), validación de tipo y peso en el navegador, `subirArchivo` con XHR y progreso, `ProgressBar`/`Spinner`/`Alert` y `UploadForm`. Probado en navegador contra Cloudinary/Atlas reales: subida de imagen → 201 con progreso 0→100 % y mensaje de éxito; tipo no permitido y > 10 MB rechazados sin petición; consola sin errores; sin desborde a 375 px. Archivo de prueba eliminado.
 - 2026-11-16 · Rol 3 · _(nombre)_ · Prueba real completa: subir imagen + PDF → aparecen en Cloudinary y Atlas; GET con filtros OK; DELETE → borrados en ambos (verificado directo en Cloudinary y Atlas). Datos de prueba eliminados.
 - 2026-11-16 · Rol 3 · _(nombre)_ · persistencia en `crearArchivo` con rollback, `GET` con filtros/orden, `DELETE` sincronizado (nube → BD) y `eliminarDeCloud`. Lógica probada fuera del repo con Cloudinary/BD simulados (12/12).
 - 2026-11-16 · Rol 2 · _(nombre)_ · multer real, errorHandler (413/400), subirACloud, validación de firma y crearArchivo parte 1 (pendiente probar con credenciales).

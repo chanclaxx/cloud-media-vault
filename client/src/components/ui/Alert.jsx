@@ -3,17 +3,19 @@
 // Props:
 //   tipo: 'exito' | 'error' | 'aviso'
 //   children: el texto
-//   onCerrar?: () => void   (si se pasa, mostrar botón ×)
-//
-// TODO(Rol 4): estilos por tipo (usar --color-exito, --color-error, --color-aviso de index.css).
-//   role="alert" para errores (los lectores de pantalla lo anuncian), role="status" para éxito.
+//   onCerrar?: () => void   (si se pasa, muestra el botón ×)
+import './Alert.css';
 
 export default function Alert({ tipo = 'aviso', children, onCerrar }) {
   return (
-    <div role={tipo === 'error' ? 'alert' : 'status'} data-tipo={tipo}>
-      {children}
+    <div
+      className={`alerta alerta--${tipo}`}
+      role={tipo === 'error' ? 'alert' : 'status'}
+      data-tipo={tipo}
+    >
+      <span className="alerta__texto">{children}</span>
       {onCerrar && (
-        <button type="button" onClick={onCerrar} aria-label="Cerrar">
+        <button type="button" className="alerta__cerrar" onClick={onCerrar} aria-label="Cerrar">
           ×
         </button>
       )}

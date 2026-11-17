@@ -2,9 +2,13 @@
 //
 // Props:
 //   texto?: string  (ej. "Subiendo..." / "Cargando archivos...")
-//
-// TODO(Rol 4): animación CSS (borde que gira con @keyframes). aria-live="polite" para accesibilidad.
+import './Spinner.css';
 
 export default function Spinner({ texto = 'Cargando...' }) {
-  return <span aria-live="polite">{texto}</span>;
+  return (
+    <span className="spinner" aria-live="polite">
+      <span className="spinner__rueda" aria-hidden="true" />
+      {texto}
+    </span>
+  );
 }
