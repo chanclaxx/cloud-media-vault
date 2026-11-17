@@ -1,7 +1,3 @@
-// Verifica la "firma" real del archivo (primeros bytes) contra el MIME declarado.
-// El navegador declara file.mimetype y se puede falsificar (ej. un .exe renombrado a .png).
-// Dueño: Rol 2
-
 const ascii = (buffer, inicio, fin) => buffer.subarray(inicio, fin).toString('latin1');
 
 const VERIFICADORES = {
@@ -15,7 +11,6 @@ const VERIFICADORES = {
   'video/webm': (b) => b[0] === 0x1a && b[1] === 0x45 && b[2] === 0xdf && b[3] === 0xa3,
 };
 
-/** true si el contenido del buffer corresponde al MIME declarado. */
 export function firmaCoincideConMime(buffer, mimeType) {
   const verificar = VERIFICADORES[mimeType];
   return Boolean(verificar && buffer.length >= 12 && verificar(buffer));

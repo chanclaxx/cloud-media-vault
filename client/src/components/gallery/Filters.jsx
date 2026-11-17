@@ -1,11 +1,3 @@
-// Filtros de la galería.  Dueño: Rol 5
-//
-// Props:
-//   valor: { tipo: string, q: string }
-//   onCambiar(nuevoValor) -> Gallery actualiza sus filtros
-//
-// Botones por tipo (Todos / Imágenes / Videos / PDF) + campo de búsqueda por título.
-// Es un componente "controlado": no guarda estado propio, todo vive en Gallery.
 import { FILTROS_TIPO } from '../../constants/archivos.js';
 
 export default function Filters({ valor, onCambiar }) {

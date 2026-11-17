@@ -1,4 +1,3 @@
-// Conexión a MongoDB Atlas con Mongoose. Dueño: Sebastian Montaño
 import mongoose from 'mongoose';
 import { env } from './env.js';
 

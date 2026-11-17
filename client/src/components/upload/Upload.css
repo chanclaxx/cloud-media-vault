@@ -1,11 +1,8 @@
-/* Estilos del formulario de subida: DropZone, ProgressBar y UploadForm. */
-
 .formulario {
   display: grid;
   gap: 14px;
 }
 
-/* ---- DropZone ---- */
 .dropzone {
   display: grid;
   justify-items: center;
@@ -37,7 +34,6 @@
   color: var(--color-texto-suave);
 }
 
-/* ---- Botones ---- */
 .boton {
   padding: 9px 16px;
   border-radius: var(--radio);
@@ -68,7 +64,6 @@
   outline-offset: 2px;
 }
 
-/* ---- Campos ---- */
 .campo {
   display: grid;
   gap: 4px;
@@ -89,7 +84,6 @@
   border-radius: var(--radio);
 }
 
-/* ---- Archivo elegido ---- */
 .seleccion {
   display: flex;
   align-items: center;
@@ -134,7 +128,6 @@
   white-space: nowrap;
 }
 
-/* ---- Progreso ---- */
 .estado-subida {
   display: grid;
   gap: 8px;

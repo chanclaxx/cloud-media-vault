@@ -1,4 +1,3 @@
-// Configuración del SDK de Cloudinary. Dueño: Sebastian Montaño
 import { v2 as cloudinary } from 'cloudinary';
 import { env } from './env.js';
 

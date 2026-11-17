@@ -1,5 +1,3 @@
-// Modelo de metadatos de un archivo subido.
-// El archivo físico vive en Cloudinary; aquí se guarda su referencia y metadatos.
 import mongoose from 'mongoose';
 import { CATEGORIAS } from '../constants/archivos.js';
 

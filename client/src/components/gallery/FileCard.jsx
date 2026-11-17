@@ -1,10 +1,3 @@
-// Tarjeta de un archivo.  Dueño: Rol 5
-//
-// Props:
-//   archivo: objeto Archivo (ver docs/API.md)
-//   onEliminar(id): Promise  -> lo maneja Gallery (borra en la API y quita la tarjeta de la lista)
-//
-// Muestra lo que pide la rúbrica: vista previa, título, peso (KB/MB), tipo, fecha, autor y botón Eliminar.
 import { useState } from 'react';
 import MediaPreview from './MediaPreview.jsx';
 import { formatearBytes, formatearFecha } from '../../utils/formato.js';
@@ -27,9 +20,7 @@ export default function FileCard({ archivo, onEliminar }) {
     setEliminando(true);
     try {
       await onEliminar(archivo.id);
-      // Si salió bien, Gallery quita esta tarjeta de la lista (desaparece sola).
     } catch {
-      // Gallery ya muestra el mensaje de error; aquí solo se reactiva el botón.
       setEliminando(false);
     }
   }

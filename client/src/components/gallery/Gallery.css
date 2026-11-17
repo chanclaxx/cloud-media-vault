@@ -1,12 +1,8 @@
-/* Estilos de la galería (Gallery, Filters, FileCard, MediaPreview).  Dueño: Rol 5
-   Usa las variables de color de src/index.css, así funciona también en modo oscuro. */
-
 .galeria {
   display: grid;
   gap: 16px;
 }
 
-/* Texto solo para lectores de pantalla (accesibilidad) */
 .solo-lector {
   position: absolute;
   width: 1px;
@@ -15,8 +11,6 @@
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
-
-/* ---------- Filtros ---------- */
 
 .filtros {
   display: flex;
@@ -74,8 +68,6 @@
   outline-offset: 2px;
 }
 
-/* ---------- Estados de la lista ---------- */
-
 .galeria__vacia {
   margin: 0;
   padding: 32px 16px;
@@ -91,14 +83,11 @@
   color: var(--color-texto-suave);
 }
 
-/* Grid responsivo: tantas columnas como quepan, mínimo 220 px cada una (1 columna en celular). */
 .galeria__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
 }
-
-/* ---------- Tarjeta ---------- */
 
 .tarjeta {
   display: flex;
@@ -181,7 +170,6 @@
   cursor: wait;
 }
 
-/* Insignia del tipo */
 .insignia {
   flex-shrink: 0;
   padding: 2px 8px;
@@ -205,11 +193,9 @@
   background: var(--color-error);
 }
 
-/* ---------- Vista previa ---------- */
-
 .vista-previa {
   width: 100%;
-  height: auto; /* sin esto, el atributo height="320" gana sobre aspect-ratio */
+  height: auto;
   aspect-ratio: 3 / 2;
   object-fit: cover;
   background: var(--color-fondo);

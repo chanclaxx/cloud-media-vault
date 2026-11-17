@@ -1,9 +1,3 @@
-// Mensaje de retroalimentación (éxito / error / aviso).  Dueño: Rol 4 (lo usa también Rol 5)
-//
-// Props:
-//   tipo: 'exito' | 'error' | 'aviso'
-//   children: el texto
-//   onCerrar?: () => void   (si se pasa, muestra el botón ×)
 import './Alert.css';
 
 export default function Alert({ tipo = 'aviso', children, onCerrar }) {

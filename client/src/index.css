@@ -1,6 +1,3 @@
-/* Estilos globales base. (Compartido: Rol 4 / Rol 5)
-   Cada componente puede tener su propio .css al lado (ej. FileCard.css) e importarlo en el .jsx. */
-
 :root {
   --color-fondo: #f4f5f7;
   --color-superficie: #ffffff;
@@ -80,7 +77,6 @@ button {
   margin-top: 24px;
 }
 
-/* En pantallas anchas: formulario a la izquierda, galería a la derecha */
 @media (min-width: 900px) {
   .app__main {
     grid-template-columns: 360px 1fr;
@@ -106,14 +102,5 @@ button {
   margin-top: 32px;
   text-align: center;
   font-size: 0.85rem;
-  color: var(--color-texto-suave);
-}
-
-/* Marcador temporal de componentes que aún no se implementan. Borrar cuando no se use. */
-.pendiente {
-  border: 2px dashed var(--color-borde);
-  border-radius: var(--radio);
-  padding: 24px;
-  text-align: center;
   color: var(--color-texto-suave);
 }

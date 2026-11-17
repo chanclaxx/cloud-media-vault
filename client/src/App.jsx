@@ -1,12 +1,8 @@
-// Layout principal. (Base compartida: coordinar Rol 4 / Rol 5 antes de modificar.)
 import { useState } from 'react';
 import UploadForm from './components/upload/UploadForm.jsx';
 import Gallery from './components/gallery/Gallery.jsx';
 
 export default function App() {
-  // Comunicación entre formulario y galería:
-  // cuando UploadForm sube un archivo con éxito llama a onSubido(); eso incrementa `version`
-  // y Gallery, al ver que `version` cambió, vuelve a pedir la lista al servidor.
   const [version, setVersion] = useState(0);
 
   return (

@@ -1,6 +1,3 @@
-// Carga y expone las variables de entorno. Dueño: Sebastian Montaño
-// Requiere Node.js >= 21.7 para process.loadEnvFile().
-
 try {
   process.loadEnvFile();
 } catch {

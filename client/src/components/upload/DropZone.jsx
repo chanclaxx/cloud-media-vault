@@ -1,8 +1,3 @@
-// Zona de arrastrar y soltar + selector de archivo.  Dueño: Rol 4
-//
-// Props:
-//   onArchivo(file: File)  -> se llama con el archivo elegido (arrastrado o seleccionado)
-//   deshabilitado: boolean -> true mientras se sube
 import { useRef, useState } from 'react';
 import { ACCEPT, MAX_MB } from '../../constants/archivos.js';
 import './Upload.css';
@@ -12,7 +7,6 @@ export default function DropZone({ onArchivo, deshabilitado }) {
   const [arrastrando, setArrastrando] = useState(false);
 
   function manejarDragOver(e) {
-    // Sin preventDefault el navegador abre el archivo en la pestaña en vez de soltarlo.
     e.preventDefault();
     if (!deshabilitado) setArrastrando(true);
   }
@@ -28,7 +22,6 @@ export default function DropZone({ onArchivo, deshabilitado }) {
   function manejarSeleccion(e) {
     const archivo = e.target.files[0];
     if (archivo) onArchivo(archivo);
-    // permite volver a elegir el mismo archivo después de un error
     e.target.value = '';
   }
 

@@ -1,7 +1,3 @@
-// Barra de progreso de subida.  Dueño: Rol 4
-//
-// Props:
-//   valor: number (0-100)
 import './Upload.css';
 
 export default function ProgressBar({ valor }) {
