@@ -1,7 +1,7 @@
-
 import { useEffect, useState } from 'react';
 import { MAX_BYTES, MAX_MB, categoriaDeMime } from '../../constants/archivos.js';
 import { subirArchivo } from '../../services/api.js';
+import { formatearBytes } from '../../utils/formato.js';
 import DropZone from './DropZone.jsx';
 import ProgressBar from './ProgressBar.jsx';
 import Alert from '../ui/Alert.jsx';
@@ -102,7 +102,7 @@ export default function UploadForm({ onSubido }) {
           </div>
           <p className="seleccion__nombre">
             {archivo.name}
-            <span> · {(archivo.size / (1024 * 1024)).toFixed(2)} MB</span>
+            <span> · {formatearBytes(archivo.size)}</span>
           </p>
         </div>
       )}
