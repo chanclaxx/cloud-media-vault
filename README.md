@@ -16,11 +16,11 @@ fecha y autor) en **MongoDB Atlas** mediante una **API REST** en Express, con un
 
 | Integrante | Usuario GitHub | Rol | Responsabilidades |
 |---|---|---|---|
-| Sebastian Montaño | `@Sebastian-Montano` | **Rol 1 — Arquitecto Cloud y Base de Datos** | Cuentas de Cloudinary y MongoDB Atlas, modelo de metadatos, variables de entorno |
-| _Nombre Apellido_ | `@usuario` | **Rol 2 — Backend: Ingesta y Subida Cloud** | `POST /api/archivos`, multer, validación de peso/MIME, subida a Cloudinary, manejo de errores |
-| _Nombre Apellido_ | `@usuario` | **Rol 3 — Backend: Persistencia CRUD y Sincronización** | Guardado de metadatos, `GET /api/archivos` con filtros, `DELETE /api/archivos/:id` sincronizado |
-| _Nombre Apellido_ | `@usuario` | **Rol 4 — Frontend: Formulario de Carga y Validaciones** | Drag & Drop, `FormData`, validación previa, barra de progreso, alertas |
-| _Nombre Apellido_ | `@usuario` | **Rol 5 — Frontend: Galería, Filtros y QA** | Galería con vistas previas, metadatos, filtros, eliminación reactiva, pruebas de integración |
+| Sebastian Montaño | **Rol 1 — Arquitecto Cloud y Base de Datos** | Cuentas de Cloudinary y MongoDB Atlas, modelo de metadatos, variables de entorno |
+| David Elias | **Rol 2 — Backend: Ingesta y Subida Cloud** | `POST /api/archivos`, multer, validación de peso/MIME, subida a Cloudinary, manejo de errores |
+| Miguel Jimenez **Rol 3 — Backend: Persistencia CRUD y Sincronización** | Guardado de metadatos, `GET /api/archivos` con filtros, `DELETE /api/archivos/:id` sincronizado |
+| Mariana Aristizabal| **Rol 4 — Frontend: Formulario de Carga y Validaciones** | Drag & Drop, `FormData`, validación previa, barra de progreso, alertas |
+| Alejandro Gonzalez | **Rol 5 — Frontend: Galería, Filtros y QA** | Galería con vistas previas, metadatos, filtros, eliminación reactiva, pruebas de integración |
 
 *(Si el equipo es de 4, los Roles 4 y 5 se fusionan en un único rol de UI/UX y Galería.)*
 
