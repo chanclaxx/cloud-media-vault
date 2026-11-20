@@ -26,6 +26,7 @@ muestras/
 *.mov
 *.webm
 *.pdf
+!video/demo-cloud-media-vault.mp4
 
 .DS_Store
 Thumbs.db

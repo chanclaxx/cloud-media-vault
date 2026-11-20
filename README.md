@@ -22,6 +22,13 @@ fecha y autor) en **MongoDB Atlas** mediante una **API REST** en Express, con un
 
 ---
 
+## Video demostrativo
+
+[▶️ Ver el video del programa funcionando](video/demo-cloud-media-vault.mp4): subida de archivos desde la
+interfaz, registro en Cloudinary y MongoDB Atlas, filtros y eliminación sincronizada.
+
+---
+
 ## Funcionalidades
 
 - **Carga validada** de imágenes (JPG, PNG, WEBP, GIF), videos (MP4, WEBM, MOV) y PDF de hasta **10 MB**,
